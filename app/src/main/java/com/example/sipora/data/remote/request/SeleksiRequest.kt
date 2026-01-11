@@ -3,9 +3,8 @@ package com.example.sipora.data.remote.request
 import com.google.gson.annotations.SerializedName
 
 data class AdministrasiRequest(
-    @SerializedName("lulus") val lulus: Boolean,
-    @SerializedName("catatan") val catatan: String?,
-    @SerializedName("skor") val skor: Int?
+    @SerializedName("status") val status: String,
+    @SerializedName("catatan") val catatan: String?
 )
 
 data class WawancaraRequest(

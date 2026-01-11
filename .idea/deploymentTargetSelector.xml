@@ -7,10 +7,10 @@
       </SelectionState>
       <SelectionState runConfigName="Sipora">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-01-01T11:58:54.932115600Z">
+        <DropdownSelection timestamp="2026-01-11T18:49:41.711623700Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="Default" identifier="serial=192.168.1.4:5555;connection=4138a714" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=f6271eb4" />
             </handle>
           </Target>
         </DropdownSelection>

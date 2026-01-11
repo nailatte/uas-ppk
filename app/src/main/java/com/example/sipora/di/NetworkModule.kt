@@ -3,7 +3,7 @@ package com.example.sipora.di
 import com.example.sipora.core.config.Constants
 import com.example.sipora.data.local.datastore.SessionManager
 import com.example.sipora.data.remote.api.*
-import com.example.sipora.data.remote.interceptor.AuthInterceptor
+import com.example.sipora.data.remote.interceptor.HeaderInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,18 +21,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(sessionManager: SessionManager): AuthInterceptor {
-        return AuthInterceptor(sessionManager)
+    fun provideHeaderInterceptor(sessionManager: SessionManager): HeaderInterceptor {
+        return HeaderInterceptor(sessionManager)
     }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+    fun provideOkHttpClient(headerInterceptor: HeaderInterceptor): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
         return OkHttpClient.Builder()
-            .addInterceptor(authInterceptor)
+            .addInterceptor(headerInterceptor)
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
@@ -79,5 +79,11 @@ object NetworkModule {
     @Singleton
     fun provideAdminService(retrofit: Retrofit): AdminService {
         return retrofit.create(AdminService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePeriodeWawancaraService(retrofit: Retrofit): PeriodeWawancaraService {
+        return retrofit.create(PeriodeWawancaraService::class.java)
     }
 }

@@ -8,31 +8,20 @@ import okhttp3.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class AuthInterceptor @Inject constructor(
+@Singleton // Add Singleton annotation if it's meant to be a singleton
+class HeaderInterceptor @Inject constructor(
     private val sessionManager: SessionManager
 ) : Interceptor {
-
     override fun intercept(chain: Interceptor.Chain): Response {
-        val originalRequest = chain.request()
-        val requestBuilder = originalRequest.newBuilder()
-        val path = originalRequest.url.encodedPath
-
-        val isPublicEndpoint = path.contains("/auth/login") || path.contains("/auth/register")
-
-        // If it's a public endpoint, proceed without modification.
-        if (isPublicEndpoint) {
-            return chain.proceed(requestBuilder.build())
-        }
-
-        // For protected endpoints, block to get the token and add the header.
         val token = runBlocking { sessionManager.tokenFlow.first() }
-        
-        if (!token.isNullOrBlank()) {
+        val request = if (!token.isNullOrBlank()) {
             val tokenType = runBlocking { sessionManager.tokenTypeFlow.first() } ?: "Bearer"
-            requestBuilder.addHeader("Authorization", "$tokenType $token")
+            chain.request().newBuilder()
+                .header("Authorization", "$tokenType $token")
+                .build()
+        } else {
+            chain.request()
         }
-
-        return chain.proceed(requestBuilder.build())
+        return chain.proceed(request)
     }
 }

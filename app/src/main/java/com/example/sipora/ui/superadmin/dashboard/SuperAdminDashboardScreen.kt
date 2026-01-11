@@ -26,6 +26,7 @@ fun SuperAdminDashboardScreen(
     onNavigateToAdmin: () -> Unit,
     onNavigateToProfile: () -> Unit,
     onNavigateToPeriode: () -> Unit,
+    onNavigateToWawancara: () -> Unit,
     viewModel: SuperAdminDashboardViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -61,13 +62,19 @@ fun SuperAdminDashboardScreen(
             NavigationBar {
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.DateRange, contentDescription = "Kelola Periode") },
-                    label = { Text("Kelola Periode") },
+                    label = { Text("Periode") },
                     selected = false,
                     onClick = onNavigateToPeriode
                 )
+                 NavigationBarItem(
+                    icon = { Icon(Icons.Default.Schedule, contentDescription = "Kelola Wawancara") },
+                    label = { Text("Wawancara") },
+                    selected = false,
+                    onClick = onNavigateToWawancara
+                )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Group, contentDescription = "Kelola Admin") },
-                    label = { Text("Kelola Admin") },
+                    label = { Text("Admin") },
                     selected = false,
                     onClick = onNavigateToAdmin
                 )

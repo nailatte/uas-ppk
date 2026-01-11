@@ -71,7 +71,7 @@ class ProfileViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            changePasswordUseCase(uiState.value.currentPassword, uiState.value.newPassword).collect { result ->
+            changePasswordUseCase(uiState.value.newPassword).collect { result ->
                 when (result) {
                     is ResultState.Loading -> _uiState.update { it.copy(isLoading = true, successMessage = null, errorMessage = null) }
                     is ResultState.Success -> _uiState.update { it.copy(isLoading = false, isSuccess = true, successMessage = "Password changed successfully!") }

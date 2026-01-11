@@ -31,4 +31,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindAdminRepository(adminRepositoryImpl: AdminRepositoryImpl): AdminRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindPeriodeWawancaraRepository(impl: PeriodeWawancaraRepositoryImpl): PeriodeWawancaraRepository
 }
